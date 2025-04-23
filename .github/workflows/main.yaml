@@ -25,6 +25,7 @@ jobs:
             yarn
             echo ${GITHUB_REF_NAME} ${GITHUB_SHA} > ./version
             yarn build
+        shell: bash
 
       - name: Prepare artifact
         run: tar -czf dist.tar.gz Frontend/dist
@@ -51,6 +52,6 @@ jobs:
       - name: Deploy to server
         run: |
             rm -rf /var/www/cvss/*
-            cp -r Frontend/dist/* /var/www/cvss
+            cp -r Frontend/dist/spa/* /var/www/cvss
             chmod -R 777 /var/www/cvss
         shell: bash
