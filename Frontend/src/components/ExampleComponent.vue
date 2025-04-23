@@ -9,13 +9,14 @@
     <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
     <p>Active: {{ active ? 'yes' : 'no' }}</p>
     <p>Clicks on todos: {{ clickCount }}</p>
+    <p>Version: {{ version }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Todo, Meta } from './models';
-
+import version from '../../version?raw';
 interface Props {
   title: string;
   todos?: Todo[];
