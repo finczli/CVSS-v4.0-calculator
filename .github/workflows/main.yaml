@@ -3,8 +3,7 @@ name: Main deployment
 on:
   push:
     branches:
-      - main
-      - ci-test
+      - *
 
 jobs:
   build:
