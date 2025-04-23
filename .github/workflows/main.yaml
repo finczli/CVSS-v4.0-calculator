@@ -22,7 +22,7 @@ jobs:
             cd Frontend
             npm install yarn -g
             yarn
-            echo ${GITHUB_REF_NAME}/${GITHUB_SHA} > ./version
+            echo "${GITHUB_REF_NAME}/${GITHUB_SHA}" > ./version
             yarn build
         shell: bash
 
