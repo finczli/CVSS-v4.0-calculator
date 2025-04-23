@@ -18,23 +18,16 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Move to project directory
+      - name: Move to project directory and build
         run: |
             cd Frontend
             npm install yarn -g
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Update version
-        run: |
+            yarn
             echo ${GITHUB_REF_NAME} ${GITHUB_SHA} > ./version
-
-      - name: Build project
-        run: yarn build
+            yarn build
 
       - name: Prepare artifact
-        run: tar -czf dist.tar.gz dist
+        run: tar -czf dist.tar.gz Frontend/dist
         shell: bash
 
       - name: Upload artifact
