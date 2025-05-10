@@ -1,7 +1,13 @@
 <template>
   <q-page class="row justify-center">
+    <q-page-sticky position="top-left" :offset="[20, 20]">
+      <q-card class="q-pa-md">
+        <div class="text-h5 text-bold">
+          CVSS 4.0: <span :class="[severityColor]">{{ score }} {{ cvssSeverity() }}</span>
+        </div>
+      </q-card>
+    </q-page-sticky>
     <div class="q-pa-md col-6">
-      {{ vector }}
       <q-card>
         <!-- Base Metrics -->
         <q-card-section class="bg-grey text-center text-white">
@@ -89,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import VectorCategory from 'src/components/VectorCategory.vue';
 // Base Metrics
@@ -116,6 +122,9 @@ import { environmental_security_requirements } from 'src/components/vectors';
 import { threat_metrics } from 'src/components/vectors';
 import { ref } from 'vue';
 
+// Import calculator
+import { CVSS40 } from '@pandatix/js-cvss';
+
 defineProps<{
   vector: string;
 }>();
@@ -138,11 +147,48 @@ function saveVectorsToUrl() {
   });
 }
 
+const score = ref(0);
+
+function cvssSeverity(): string {
+  // Calculate the CVSS severity based on the score
+  if (score.value >= 9) {
+    return 'Critical';
+  } else if (score.value >= 7) {
+    return 'High';
+  } else if (score.value >= 4) {
+    return 'Medium';
+  } else if (score.value > 0) {
+    return 'Low';
+  }
+  return 'None';
+}
+
+const severityColor = computed(() => {
+  // Return the color based on the severity
+  if (score.value >= 9) {
+    return 'text-red-14';
+  } else if (score.value >= 7) {
+    return 'text-deep-orange-7';
+  } else if (score.value >= 4) {
+    return 'text-amber-6';
+  } else if (score.value > 0) {
+    return 'text-green';
+  }
+  return 'text-grey';
+});
+
 watch(
   vectors,
   () => {
     // Emit the new value to the parent component
     saveVectorsToUrl();
+    try {
+      const vec = new CVSS40(createVector());
+      score.value = vec.Score();
+    } catch (error) {
+      console.error('Error creating CVSS vector:', error);
+      return;
+    }
   },
   { deep: true },
 );
