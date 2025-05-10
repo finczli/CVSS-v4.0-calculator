@@ -122,6 +122,8 @@ import { environmental_security_requirements } from 'src/components/vectors';
 import { threat_metrics } from 'src/components/vectors';
 import { ref } from 'vue';
 
+import { useQuasar } from 'quasar';
+
 // Import calculator
 import { CVSS40 } from '@pandatix/js-cvss';
 
@@ -130,6 +132,7 @@ defineProps<{
 }>();
 
 const router = useRouter();
+const $q = useQuasar();
 
 // Extract vectors from the user
 const vectors = ref<string[]>([]);
@@ -186,6 +189,10 @@ watch(
       const vec = new CVSS40(createVector());
       score.value = vec.Score();
     } catch (error) {
+      $q.notify({
+        type: 'negative',
+        message: 'Invalid CVSS vector format.',
+      });
       console.error('Error creating CVSS vector:', error);
       return;
     }
