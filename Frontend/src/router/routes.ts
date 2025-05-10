@@ -2,9 +2,18 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    // Redirect from the root path to the calculator page
+    path: '/',
+    redirect: '/calculator',
+  },
+  {
+    // Main layout for the application
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'calculator/:vector', component: () => import('pages/CalculatorPage.vue') }],
+    children: [
+      // Route for the calculator page
+      { path: 'calculator/:vector?', component: () => import('pages/CalculatorPage.vue') },
+    ],
   },
 
   // Always leave this as last one,
