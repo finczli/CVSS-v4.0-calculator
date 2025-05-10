@@ -19,10 +19,11 @@ import type { VectorButtonsType } from './types';
 
 const props = defineProps<{
   vectorButtons: VectorButtonsType;
+  modelValue: string;
 }>();
 
 // Value can not be undefined
-const vec_model = ref(props.vectorButtons.buttons[0]!.value);
+const vec_model = ref(props.modelValue);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;

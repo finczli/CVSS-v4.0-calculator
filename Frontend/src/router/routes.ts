@@ -12,7 +12,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       // Route for the calculator page
-      { path: 'calculator/:vector?', component: () => import('pages/CalculatorPage.vue') },
+      {
+        path: 'calculator/:vector?',
+        component: () => import('pages/CalculatorPage.vue'),
+        props: true,
+      },
     ],
   },
 

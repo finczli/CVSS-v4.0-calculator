@@ -13,6 +13,7 @@
             modelMap[vectorButtons.vector] = newValue;
           }
         "
+        :modelValue="modelMap[vectorButtons.vector]!"
       />
     </q-card-section>
   </q-card>
@@ -23,11 +24,11 @@ import type { VectorCategoryType } from './types';
 import { ModelMapType2Vector } from './vectors';
 import VectorButtons from './VectorButtons.vue';
 import type { ModelMapType } from './types';
-import { ref } from 'vue';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
   vectorCategory: VectorCategoryType;
+  vector?: string;
 }>();
 
 // Create model for each button
@@ -36,7 +37,9 @@ const modelMap = ref<ModelMapType>(
     props.vectorCategory.buttons.map((buttons_cat) => [
       // We only need the beginning of the vector
       buttons_cat.vector,
-      buttons_cat.buttons[0]!.value,
+      loadVectorValues(buttons_cat.vector) === null
+        ? buttons_cat.buttons[0]!.value
+        : loadVectorValues(buttons_cat.vector)!,
     ]),
   ),
 );
@@ -44,6 +47,28 @@ const modelMap = ref<ModelMapType>(
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
+
+// Emit the initial value to the parent component
+emit('update:modelValue', ModelMapType2Vector(modelMap.value));
+
+// Load vector values from url
+function loadVectorValues(vector_name: string): string | null {
+  if (props.vector === undefined) {
+    return null;
+  }
+  const vectorParts = props.vector.split('/');
+  // Remove the first part (CVSS:4.0)
+  vectorParts.shift();
+
+  // Find the index of the vector name
+  const index = vectorParts.findIndex((part) => part.split(':')[0] === vector_name);
+  if (index === -1 || vectorParts[index] === undefined) {
+    return null;
+  }
+
+  // Get the value of the vector
+  return vectorParts[index];
+}
 
 watch(
   modelMap,

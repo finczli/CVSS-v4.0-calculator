@@ -1,7 +1,7 @@
 <template>
   <q-page class="row justify-center">
     <div class="q-pa-md col-6">
-      {{ createVector() }}
+      {{ vector }}
       <q-card>
         <!-- Base Metrics -->
         <q-card-section class="bg-grey text-center text-white">
@@ -11,14 +11,17 @@
         <q-card-section class="column">
           <VectorCategory
             :vector-category="exploitability_metrics"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[0] = newValue)"
           />
           <VectorCategory
             :vector-category="vulnerable_system_impact_metrics"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[1] = newValue)"
           />
           <VectorCategory
             :vector-category="subsequent_system_impact_metrics"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[2] = newValue)"
           />
         </q-card-section>
@@ -30,6 +33,7 @@
         <q-card-section class="column">
           <VectorCategory
             :vector-category="supplemental_metrics"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[3] = newValue)"
           />
         </q-card-section>
@@ -41,14 +45,17 @@
         <q-card-section class="column">
           <VectorCategory
             :vector-category="exploitability_metrics_env"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[4] = newValue)"
           />
           <VectorCategory
             :vector-category="vulnerable_system_impact_metrics_env"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[5] = newValue)"
           />
           <VectorCategory
             :vector-category="subsequent_system_impact_metrics_env"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[6] = newValue)"
           />
         </q-card-section>
@@ -60,6 +67,7 @@
         <q-card-section class="column">
           <VectorCategory
             :vector-category="environmental_security_requirements"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[7] = newValue)"
           />
         </q-card-section>
@@ -71,6 +79,7 @@
         <q-card-section class="column">
           <VectorCategory
             :vector-category="threat_metrics"
+            :vector="vector"
             @update:model-value="(newValue) => (vectors[8] = newValue)"
           />
         </q-card-section>
@@ -106,6 +115,10 @@ import { environmental_security_requirements } from 'src/components/vectors';
 // Threat Metrics
 import { threat_metrics } from 'src/components/vectors';
 import { ref } from 'vue';
+
+defineProps<{
+  vector: string;
+}>();
 
 const router = useRouter();
 
