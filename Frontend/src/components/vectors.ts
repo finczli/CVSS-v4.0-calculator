@@ -2,10 +2,8 @@ import type { VectorCategoryType, ModelMapType } from './types.ts';
 
 export function ModelMapType2Vector(model: ModelMapType): string {
   return Object.values(model)
-    .map((value) => {
-      if (value !== 'X') return `${value}`;
-      else return '';
-    })
+    .filter((value) => value !== 'X')
+    .map((value) => value)
     .join('/');
 }
 

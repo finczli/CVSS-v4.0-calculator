@@ -10,7 +10,7 @@
         :vectorButtons="vectorButtons"
         @update:modelValue="
           (newValue) => {
-            modelMap[vectorButtons.name] = newValue;
+            modelMap[vectorButtons.vector] = newValue;
           }
         "
       />
@@ -35,7 +35,7 @@ const modelMap = ref<ModelMapType>(
   Object.fromEntries(
     props.vectorCategory.buttons.map((buttons_cat) => [
       // We only need the beginning of the vector
-      buttons_cat.buttons[0]!.value.split(':')[0],
+      buttons_cat.vector,
       buttons_cat.buttons[0]!.value,
     ]),
   ),
