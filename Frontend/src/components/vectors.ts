@@ -15,6 +15,7 @@ export const exploitability_metrics: VectorCategoryType = {
   buttons: [
     {
       name: 'Attack Vector',
+      vector: 'AV',
       buttons: [
         { label: 'Network', value: 'AV:N' },
         { label: 'Adjacent Network', value: 'AV:A' },
@@ -24,6 +25,7 @@ export const exploitability_metrics: VectorCategoryType = {
     },
     {
       name: 'Attack Complexity',
+      vector: 'AC',
       buttons: [
         { label: 'Low', value: 'AC:L' },
         { label: 'High', value: 'AC:H' },
@@ -31,6 +33,7 @@ export const exploitability_metrics: VectorCategoryType = {
     },
     {
       name: 'Attack Requirements',
+      vector: 'AT',
       buttons: [
         { label: 'None', value: 'AT:N' },
         { label: 'Present', value: 'AT:P' },
@@ -38,6 +41,7 @@ export const exploitability_metrics: VectorCategoryType = {
     },
     {
       name: 'Privileges Required',
+      vector: 'PR',
       buttons: [
         { label: 'None', value: 'PR:N' },
         { label: 'Low', value: 'PR:L' },
@@ -46,6 +50,7 @@ export const exploitability_metrics: VectorCategoryType = {
     },
     {
       name: 'User Interaction',
+      vector: 'UI',
       buttons: [
         { label: 'None', value: 'UI:N' },
         { label: 'Passive', value: 'UI:P' },
@@ -60,6 +65,7 @@ export const vulnerable_system_impact_metrics: VectorCategoryType = {
   buttons: [
     {
       name: 'Confidentiality',
+      vector: 'VC',
       buttons: [
         { label: 'None', value: 'VC:N' },
         { label: 'Low', value: 'VC:L' },
@@ -68,6 +74,7 @@ export const vulnerable_system_impact_metrics: VectorCategoryType = {
     },
     {
       name: 'Integrity',
+      vector: 'VI',
       buttons: [
         { label: 'None', value: 'VI:N' },
         { label: 'Low', value: 'VI:L' },
@@ -76,6 +83,7 @@ export const vulnerable_system_impact_metrics: VectorCategoryType = {
     },
     {
       name: 'Availability',
+      vector: 'VA',
       buttons: [
         { label: 'None', value: 'VA:N' },
         { label: 'Low', value: 'VA:L' },
@@ -90,6 +98,7 @@ export const subsequent_system_impact_metrics: VectorCategoryType = {
   buttons: [
     {
       name: 'Confidentiality',
+      vector: 'SC',
       buttons: [
         { label: 'None', value: 'SC:N' },
         { label: 'Low', value: 'SC:L' },
@@ -98,6 +107,7 @@ export const subsequent_system_impact_metrics: VectorCategoryType = {
     },
     {
       name: 'Integrity',
+      vector: 'SI',
       buttons: [
         { label: 'None', value: 'SI:N' },
         { label: 'Low', value: 'SI:L' },
@@ -106,6 +116,7 @@ export const subsequent_system_impact_metrics: VectorCategoryType = {
     },
     {
       name: 'Availability',
+      vector: 'SA',
       buttons: [
         { label: 'None', value: 'SA:N' },
         { label: 'Low', value: 'SA:L' },
@@ -121,6 +132,7 @@ export const supplemental_metrics: VectorCategoryType = {
   buttons: [
     {
       name: 'Safety',
+      vector: 'S',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Negligible', value: 'S:N' },
@@ -129,6 +141,7 @@ export const supplemental_metrics: VectorCategoryType = {
     },
     {
       name: 'Automatable',
+      vector: 'AU',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'No', value: 'AU:N' },
@@ -137,6 +150,7 @@ export const supplemental_metrics: VectorCategoryType = {
     },
     {
       name: 'Recovery',
+      vector: 'R',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Automatic', value: 'R:A' },
@@ -146,6 +160,7 @@ export const supplemental_metrics: VectorCategoryType = {
     },
     {
       name: 'Value Density',
+      vector: 'V',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Diffuse', value: 'V:D' },
@@ -154,6 +169,7 @@ export const supplemental_metrics: VectorCategoryType = {
     },
     {
       name: 'Vulnerability Response Effort',
+      vector: 'RE',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Low', value: 'RE:L' },
@@ -163,6 +179,7 @@ export const supplemental_metrics: VectorCategoryType = {
     },
     {
       name: 'Provider Urgency',
+      vector: 'U',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Clear', value: 'U:Clear' },
@@ -180,6 +197,7 @@ export const exploitability_metrics_env: VectorCategoryType = {
   buttons: [
     {
       name: 'Attack Vector',
+      vector: 'MAV',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Network', value: 'MAV:N' },
@@ -190,6 +208,7 @@ export const exploitability_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Attack Complexity',
+      vector: 'MAC',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Low', value: 'MAC:L' },
@@ -198,6 +217,7 @@ export const exploitability_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Attack Requirements',
+      vector: 'MAT',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MAT:N' },
@@ -206,6 +226,7 @@ export const exploitability_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Privileges Required',
+      vector: 'MPR',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MPR:N' },
@@ -215,6 +236,7 @@ export const exploitability_metrics_env: VectorCategoryType = {
     },
     {
       name: 'User Interaction',
+      vector: 'MUI',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MUI:N' },
@@ -230,6 +252,7 @@ export const vulnerable_system_impact_metrics_env: VectorCategoryType = {
   buttons: [
     {
       name: 'Confidentiality',
+      vector: 'MVC',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MVC:N' },
@@ -239,6 +262,7 @@ export const vulnerable_system_impact_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Integrity',
+      vector: 'MVI',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MVI:N' },
@@ -248,6 +272,7 @@ export const vulnerable_system_impact_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Availability',
+      vector: 'MVA',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'None', value: 'MVA:N' },
@@ -263,6 +288,7 @@ export const subsequent_system_impact_metrics_env: VectorCategoryType = {
   buttons: [
     {
       name: 'Confidentiality',
+      vector: 'MSC',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'High', value: 'MSC:H' },
@@ -272,6 +298,7 @@ export const subsequent_system_impact_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Integrity',
+      vector: 'MSI',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Safety', value: 'MSI:S' },
@@ -282,6 +309,7 @@ export const subsequent_system_impact_metrics_env: VectorCategoryType = {
     },
     {
       name: 'Availability',
+      vector: 'MSA',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Safety', value: 'MSA:S' },
@@ -298,6 +326,7 @@ export const environmental_security_requirements: VectorCategoryType = {
   buttons: [
     {
       name: 'Confidentiality Requirement',
+      vector: 'CR',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Low', value: 'CR:L' },
@@ -307,6 +336,7 @@ export const environmental_security_requirements: VectorCategoryType = {
     },
     {
       name: 'Integrity Requirement',
+      vector: 'IR',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Low', value: 'IR:L' },
@@ -316,6 +346,7 @@ export const environmental_security_requirements: VectorCategoryType = {
     },
     {
       name: 'Availability Requirement',
+      vector: 'AR',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Low', value: 'AR:L' },
@@ -332,6 +363,7 @@ export const threat_metrics: VectorCategoryType = {
   buttons: [
     {
       name: 'Exploit Maturity',
+      vector: 'E',
       buttons: [
         { label: 'Not Defined', value: 'X' },
         { label: 'Attacked', value: 'E:A' },

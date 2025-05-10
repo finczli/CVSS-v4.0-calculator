@@ -1,5 +1,6 @@
 export type VectorButtonsType = {
   name: string;
+  vector: string;
   buttons: { label: string; value: string }[];
 };
 
