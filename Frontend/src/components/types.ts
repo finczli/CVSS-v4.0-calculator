@@ -7,3 +7,7 @@ export type VectorCategoryType = {
   categoryName: string;
   buttons: VectorButtonsType[];
 };
+
+export type ModelMapType = {
+  [key: string]: string;
+};

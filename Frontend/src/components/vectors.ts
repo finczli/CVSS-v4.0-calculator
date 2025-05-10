@@ -1,4 +1,10 @@
-import type { VectorCategoryType } from './types.ts';
+import type { VectorCategoryType, ModelMapType } from './types.ts';
+
+export function ModelMapType2Vector(model: ModelMapType): string {
+  return Object.entries(model)
+    .map(([value]) => `${value}`)
+    .join('/');
+}
 
 /* Base Metrics */
 export const exploitability_metrics: VectorCategoryType = {
