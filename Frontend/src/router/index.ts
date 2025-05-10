@@ -19,10 +19,25 @@ import routes from './routes';
 export default defineRouter(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory);
+    : process.env.VUE_ROUTER_MODE === 'history'
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
-    scrollBehavior: () => ({ left: 0, top: 0 }),
+    scrollBehavior: (to, from, savedPosition) => {
+      // If there is a saved position, return it
+      if (savedPosition) {
+        return savedPosition;
+      }
+
+      if (to.path === from.path) {
+        // If the path is the same, do not scroll
+        return {};
+      }
+
+      // If route changes, scroll to top
+      return { top: 0 };
+    },
     routes,
 
     // Leave this as is and make changes in quasar.conf.js instead!

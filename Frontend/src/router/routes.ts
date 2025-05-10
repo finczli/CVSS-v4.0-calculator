@@ -13,9 +13,9 @@ const routes: RouteRecordRaw[] = [
     children: [
       // Route for the calculator page
       {
-        path: 'calculator/:vector?',
+        path: 'calculator',
         component: () => import('pages/CalculatorPage.vue'),
-        props: true,
+        props: (route) => ({ vector: route.query.vector }),
       },
     ],
   },

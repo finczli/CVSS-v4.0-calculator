@@ -132,12 +132,12 @@ function createVector(): string {
 
 // Save vectors to url /calculator/:vectors
 function saveVectorsToUrl() {
-  const url = '/calculator/' + encodeURIComponent(createVector());
   // Update the URL without reloading the page
-  router.replace(url).catch((error) => {
+  router.replace({ path: '/calculator', query: { vector: createVector() } }).catch((error) => {
     console.error('Failed to update URL:', error);
   });
 }
+
 watch(
   vectors,
   () => {
