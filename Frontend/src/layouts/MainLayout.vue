@@ -21,14 +21,16 @@
           <div class="logo">
             <img src="/icons/CVSS-logo.png" />
           </div>
-          <h1 class="text-h6">Common Vulnerability Scoring System Version 4.0 Calculator</h1>
+          <h1 class="text-h6">Version: {{ version }}</h1>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import version from '../../version?raw';
+</script>
 
 <style lang="css" scoped>
 .logo {
