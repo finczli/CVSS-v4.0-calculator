@@ -1,0 +1,56 @@
+name: Main deployment
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Move to project directory and build
+        run: |
+            cd Frontend
+            npm install yarn -g
+            yarn
+            echo "${GITHUB_REF_NAME}/${GITHUB_SHA}" > ./version
+            yarn build
+        shell: bash
+
+      - name: Prepare artifact
+        run: tar -czf dist.tar.gz Frontend/dist
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist.tar.gz
+          path: 'dist.tar.gz'
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist.tar.gz
+
+      - name: Extract artifact
+        run: tar -xzf dist.tar.gz
+        shell: bash
+
+      - name: Deploy to server
+        run: |
+            rm -rf /var/www/cvss/*
+            cp -r Frontend/dist/spa/* /var/www/cvss
+            chmod -R 777 /var/www/cvss
+        shell: bash
