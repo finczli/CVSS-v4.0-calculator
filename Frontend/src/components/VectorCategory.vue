@@ -1,6 +1,6 @@
 <template>
   <q-card flat>
-    <q-card-section class="text-center" v-if="vectorCategory.categoryName !== ''">
+    <q-card-section class="text-center" v-if="vectorCategory.categoryName !== '' && vectorCategory.displayCategoryName !== false">
       <div class="text-h6 text-grey-8">{{ vectorCategory.categoryName }}</div>
     </q-card-section>
     <q-card-section class="column q-gutter-y-xs">
