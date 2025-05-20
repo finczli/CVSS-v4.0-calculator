@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "pdfmake": "^0.2.20",
     "quasar": "^2.16.0",
     "vue": "^3.4.18",
     "vue-i18n": "^11.0.0",
@@ -27,6 +28,8 @@
     "@pandatix/js-cvss": "^0.4.4",
     "@quasar/app-vite": "^2.1.0",
     "@types/node": "^20.5.9",
+    "@types/pdfkit": "^0.13.9",
+    "@types/pdfmake": "^0.2.11",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^14.4.0",
     "autoprefixer": "^10.4.2",

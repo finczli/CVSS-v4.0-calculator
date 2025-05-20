@@ -9,7 +9,12 @@
         <div class="text-h6 text-bold q-pt-xs q-pb-xs">
           <span v-if="vector"
             >{{ vector.length > 35 ? vector.substring(0, 30) + '...' : vector }}
-            <q-tooltip anchor="top right" self="bottom right" :offset="[0, 10]" style="font-size: 1em">
+            <q-tooltip
+              anchor="top right"
+              self="bottom right"
+              :offset="[0, 10]"
+              style="font-size: 1em"
+            >
               {{ vector }}
             </q-tooltip>
           </span>
@@ -23,12 +28,13 @@
           />
         </div>
         <q-separator />
-        <q-btn no-caps
+        <q-btn
+          no-caps
           class="q-mt-sm"
           color="primary"
           label="Export to PDF"
           icon="download"
-          @click="ExportToPDF()"
+          @click="ExportToPDF"
         />
       </q-card>
     </q-page-sticky>
@@ -127,7 +133,7 @@ import VectorCategory from 'src/components/VectorCategory.vue';
 import {
   exploitability_metrics,
   vulnerable_system_impact_metrics,
-  subsequent_system_impact_metrics,
+  subsequent_system_impact_metrics
 } from 'src/components/vectors';
 
 // Supplemental Metrics
@@ -145,12 +151,17 @@ import { environmental_security_requirements } from 'src/components/vectors';
 
 // Threat Metrics
 import { threat_metrics } from 'src/components/vectors';
+import { merged_metrics } from 'src/components/vectors';
 import { ref } from 'vue';
 
 import { useQuasar } from 'quasar';
 
 // Import calculator
 import { CVSS40 } from '@pandatix/js-cvss';
+
+import * as pdfmake from 'pdfmake/build/pdfmake';
+import type { TDocumentDefinitions } from 'pdfmake/interfaces';
+
 
 defineProps<{
   vector: string;
@@ -236,7 +247,102 @@ async function copyToClipboard() {
 }
 
 function ExportToPDF() {
+  $q.notify({
+    type: 'positive',
+    message: 'Exporting to PDF...',
+  });
+  const description: Record<string, { name: string; value: string, description: string }[]> = {};
+  const preparedVectors = vectors.value.filter((val) => val !== '').flatMap((x => x.split('/')));
+  //Find metrics that start with M and replace the values
+  preparedVectors.filter((x => x.startsWith("M"))).forEach((v) => {
+    console.log(v);
+    console.log(v.substring(1))
+    console.log(v.substring(1).split(':'))
+      const tmp = v.substring(1).split(':')[0];
+      const toReplace = preparedVectors.find((x) => x.startsWith(tmp!));
+      if(toReplace === undefined) {
+        preparedVectors.push(v.substring(1));
+      }
+      else{
+        preparedVectors.splice(preparedVectors.indexOf(toReplace), 1);
+        preparedVectors.push(v.substring(1));
+      }
+      preparedVectors.splice(preparedVectors.indexOf(v), 1);
+  });
+  preparedVectors.forEach((v => {
+    console.log("Search for metric with id: ", v);
+    const desc = merged_metrics.find((m) => m.id === v);
+    if (desc) {
+      if (description[desc.category] === undefined) {
+        description[desc.category] = [];
+      }
+      description[desc.category]!.push({ name: desc.name, value: desc.value, description: desc.description });
+    }
+  }));
+  const docDefinition: TDocumentDefinitions = {
+    content: [
+      {
+        text: 'CVSS 4.0 Vector',
+        style: 'header',
+        margin: [0, 0, 0, 10],
+      },
+      {
+        text: createVector(),
+        style: 'subheader',
+        margin: [0, 0, 0, 10],
+      },
+      {
+        text: `Score: ${score.value} (${cvssSeverity()})`,
+        style: 'subheader',
+        margin: [0, 0, 0, 10],
+      },
+      { text: 'Selected metrics:', style: 'subheader' },
+      {
+        table: {
+          widths: ['auto', 'auto', 'auto'],
+          body: [
+            [
+              { text: 'Category', style: 'header' },
+              { text: 'Value', style: 'header' },
+              { text: 'Description', style: 'header' },
+            ],
+            ...Object.entries(description).flatMap(([category, metrics]) => [
+              [{ text: category, colSpan: 3, style: 'tableHeader' }, {}],
+              ...metrics.map((metric) => [metric.name, metric.value, {text: metric.description, style: 'justify'}]),
+            ]),
+          ],
+        },
+      },
+    ],
+    styles: {
+      header: {
+        fontSize: 18,
+        bold: true,
+      },
+      subheader: {
+        fontSize: 14,
+        bold: true,
+      },
+      tableHeader: {
+        fontSize: 18,
+        bold: true,
+        alignment: "center"
+      },
+      justify: {
+        alignment: 'justify'
+      },
+    },
+  };
 
+  // Create the PDF and download it
+  pdfmake.createPdf(docDefinition, undefined, {
+    Roboto: {
+      normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+      bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+      italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+      bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+    }
+  }).download("cvss-report.pdf");
 }
 </script>
 
