@@ -5,6 +5,31 @@
         <div class="text-h5 text-bold">
           CVSS 4.0: <span :class="[severityColor]">{{ score }} {{ cvssSeverity() }}</span>
         </div>
+        <q-separator />
+        <div class="text-h6 text-bold q-pt-xs q-pb-xs">
+          <span v-if="vector"
+            >{{ vector.length > 35 ? vector.substring(0, 30) + '...' : vector }}
+            <q-tooltip anchor="top right" self="bottom right" :offset="[0, 10]" style="font-size: 1em">
+              {{ vector }}
+            </q-tooltip>
+          </span>
+          <span v-else>CVSS:4.0/</span>
+          <q-btn
+            outline
+            class="q-ml-sm q-pa-sm"
+            color="primary"
+            icon="content_copy"
+            @click="copyToClipboard"
+          />
+        </div>
+        <q-separator />
+        <q-btn no-caps
+          class="q-mt-sm"
+          color="primary"
+          label="Export to PDF"
+          icon="download"
+          @click="ExportToPDF()"
+        />
       </q-card>
     </q-page-sticky>
     <div class="q-pa-md col-6">
@@ -40,7 +65,7 @@
           <VectorCategory
             :vector-category="supplemental_metrics"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[3] = newValue)"
+            @update:model-value="(newValue) => (vectors[8] = newValue)"
           />
         </q-card-section>
         <!-- Environmental (Modified Base Metrics)-->
@@ -52,17 +77,17 @@
           <VectorCategory
             :vector-category="exploitability_metrics_env"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[4] = newValue)"
+            @update:model-value="(newValue) => (vectors[5] = newValue)"
           />
           <VectorCategory
             :vector-category="vulnerable_system_impact_metrics_env"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[5] = newValue)"
+            @update:model-value="(newValue) => (vectors[6] = newValue)"
           />
           <VectorCategory
             :vector-category="subsequent_system_impact_metrics_env"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[6] = newValue)"
+            @update:model-value="(newValue) => (vectors[7] = newValue)"
           />
         </q-card-section>
         <!-- Environmental (Security Requirements)-->
@@ -74,7 +99,7 @@
           <VectorCategory
             :vector-category="environmental_security_requirements"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[7] = newValue)"
+            @update:model-value="(newValue) => (vectors[4] = newValue)"
           />
         </q-card-section>
         <!-- Threat Metrics-->
@@ -86,7 +111,7 @@
           <VectorCategory
             :vector-category="threat_metrics"
             :vector="vector"
-            @update:model-value="(newValue) => (vectors[8] = newValue)"
+            @update:model-value="(newValue) => (vectors[3] = newValue)"
           />
         </q-card-section>
       </q-card>
@@ -199,6 +224,20 @@ watch(
   },
   { deep: true },
 );
+
+async function copyToClipboard() {
+  // Copy the vector to the clipboard
+  await navigator.clipboard.writeText(createVector()).then(() => {
+    $q.notify({
+      type: 'positive',
+      message: 'Copied to clipboard!',
+    });
+  });
+}
+
+function ExportToPDF() {
+
+}
 </script>
 
 <style lang="css" scoped></style>
