@@ -302,9 +302,9 @@ function ExportToPDF() {
           widths: ['auto', 'auto', 'auto'],
           body: [
             [
-              { text: 'Category', style: 'header' },
-              { text: 'Value', style: 'header' },
-              { text: 'Description', style: 'header' },
+              { text: 'Category', style: 'tableHeader' },
+              { text: 'Value', style: 'tableHeader' },
+              { text: 'Description', style: 'tableHeader' },
             ],
             ...Object.entries(description).flatMap(([category, metrics]) => [
               [{ text: category, colSpan: 3, style: 'tableHeader' }, {}],
